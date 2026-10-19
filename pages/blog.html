@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог | Etran</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/images/small-logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .blog-header {
+            background: var(--my-darkgreen);
+            padding: 4rem 5%;
+            text-align: center;
+            color: white;
+        }
+        .blog-header h1 {
+            width: auto;
+            margin: 0 auto;
+            font-size: 3rem;
+        }
+        .blog-list-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 4rem auto;
+        }
+        .blog-date {
+            font-size: 0.8rem;
+            color: var(--my-green);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="flex-direction: column;">
+        <header class="blog-header">
+            <div class="logo" style="margin: 0 auto 2rem; cursor: pointer;" onclick="window.location.href='../index.html'">
+                <img src="../assets/images/small-logo.svg" alt="">
+                <p>Etran</p>
+            </div>
+            <h1>Наш Блог</h1>
+            <p>Новини, поради та оновлення від команди Etran</p>
+        </header>
+
+        <main class="blog-list-container">
+            <div id="all-blog-posts" class="blog-posts-grid">
+                <!-- All posts injected here -->
+            </div>
+        </main>
+
+        <footer style="height: auto; padding: 4rem 5%;">
+            <div class="footer-logo">
+                <img src="../assets/images/big-logo.svg" alt="">
+                <p class="footer-title">Etran</p>
+            </div>
+            <div class="footer-links">
+                <p>&copy; 2024 Etran. Всі права захищені.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../assets/js/blog-data.js"></script>
+</body>
+
+</html>

@@ -19,12 +19,16 @@
             <header>
                 <nav>
                     <div id="fixed-nav" class="fixed-nav">
-                        <div class="logo">
+                                                <div class="logo">
                             <img src="./assets/images/small-logo.svg" alt="">
                             <p>Etran</p>
                         </div>
-                        <button id="open-modal-btn1" class="get-started-button">Get started</button>
+                        <div class="auth-buttons">
+                            <button id="login-btn" class="login-button">Login</button>
+                            <button id="signup-btn" class="get-started-button">Sign Up</button>
+                        </div>
                     </div>
+
                 </nav>
                 <div class="header-text">
                     <h1>Money Transfers Made <span>Simple</span></h1>
@@ -140,7 +144,19 @@
                     <p class="download-title">Download Etran and manage everything from your phone.</p>
                     <button id="open-modal-btn2" class="get-started-button">Get started</button>
                 </div>
+
+                                <div class="blog-section">
+                    <p class="blog-section-title">Latest from our Blog</p>
+                    <div id="blog-posts-container" class="blog-posts-grid">
+                        <!-- Posts will be injected here -->
+                    </div>
+                    <div class="blog-more-container">
+                        <a href="pages/blog.html" class="get-started-button blog-more-btn">Більше</a>
+                    </div>
+                </div>
+
             </main>
+
 
             <footer>
                 <div class="footer-logo">
@@ -169,7 +185,9 @@
             <div class="modal-content">
                 <button id="close-modal-btn" class="modal-close">x</button>
 
-                <h3 class="modal-title">Get Started!</h3>
+                <h3 id="modal-title" class="modal-title">Get Started!</h3>
+                
+                <!-- Feedback Form -->
                 <form class="modal-form" id="feedback-form">
                     <div class="form-group">
                         <label for="userName">Name:</label>
@@ -188,10 +206,33 @@
 
                     <button type="submit" class="submit-btn">Sent</button>
                 </form>
+
+                <!-- Auth Form (Hidden by default) -->
+                <form class="modal-form d-none" id="auth-form">
+                    <div class="form-group">
+                        <label for="authEmail">Email:</label>
+                        <input type="email" id="authEmail" name="email" placeholder="example@mail.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="authPassword">Password:</label>
+                        <input type="password" id="authPassword" name="password" placeholder="********" required>
+                    </div>
+
+                    <button type="submit" id="auth-submit-btn" class="submit-btn">Login</button>
+                    <p id="auth-switch" class="auth-switch-text">Don't have an account? <span>Sign Up</span></p>
+                </form>
             </div>
         </div>
+
     </div>
-    <script src="./assets/js/index.js "></script>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="./assets/js/supabaseClient.js"></script>
+        <script src="./assets/js/blog-data.js"></script>
+        <script src="./assets/js/auth.js"></script>
+        <script src="./assets/js/index.js"></script>
 </body>
+
+
 
 </html>

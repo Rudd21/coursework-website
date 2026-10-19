@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стаття | Etran</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/images/small-logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .article-hero {
+            width: 100%;
+            height: 50vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .article-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .article-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 0 5%;
+            text-align: center;
+        }
+        .article-container {
+            max-width: 800px;
+            margin: -50px auto 5rem;
+            background: white;
+            position: relative;
+            z-index: 2;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .article-meta {
+            color: var(--my-green);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .article-body {
+            line-height: 1.8;
+            color: var(--my-gray);
+            font-size: 1.1rem;
+        }
+        .back-to-blog {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--my-darkgreen);
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="article-content">
+        <div class="article-hero">
+            <img id="article-image" src="" alt="">
+            <div class="article-hero-overlay">
+                <h1 id="article-title" style="width: auto; font-size: 3.5rem;">Loading...</h1>
+            </div>
+        </div>
+
+        <main class="article-container">
+            <a href="blog.html" class="back-to-blog">← Назад до блогу</a>
+            <div class="article-meta" id="article-date"></div>
+            <div class="article-body" id="article-body">
+                <!-- Content injected here -->
+            </div>
+        </main>
+    </div>
+
+    <footer style="height: auto; padding: 4rem 5%; background: var(--my-background-gray);">
+        <div class="footer-logo">
+            <img src="../assets/images/big-logo.svg" alt="">
+            <p class="footer-title">Etran</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/blog-data.js"></script>
+</body>
+
+</html>

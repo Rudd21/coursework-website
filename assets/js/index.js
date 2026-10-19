@@ -80,8 +80,12 @@ const closeModalBtn = document.getElementById('close-modal-btn');
 
 const feedbackForm = document.getElementById('feedback-form');
 
-openModalBtn1.addEventListener('click', openModal);
-openModalBtn2.addEventListener('click', openModal);
+if(openModalBtn1){
+    openModalBtn1.addEventListener('click', openModal);
+}
+if(openModalBtn2){
+    openModalBtn2.addEventListener('click', openModal);
+}
 
 function openModal() {
     modal.classList.add('modal-open');
