@@ -73,7 +73,39 @@ showButton.addEventListener('click', function() {
     showButton.classList.toggle('button-close')
 })
 
-const openModalBtn1 = document.getElementById('open-modal-btn1');
+// Show/Hide Auth Buttons based on session
+async function updateHeaderAuth() {
+    const authButtons = document.querySelector('.auth-buttons');
+    if (!authButtons) return;
+
+    const { data: { session } } = await window.supabaseClient.auth.getSession();
+    
+    if (session) {
+        // User is logged in
+        const { data: profile } = await window.supabaseClient
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .maybeSingle();
+
+        const isAdmin = profile && (profile.role === 'admin' || profile.role === 'staff');
+
+        authButtons.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 15px;">
+                ${isAdmin ? `<a href="admin.html" class="login-button" style="text-decoration: none; display: block; text-align: center; border: 1px solid var(--my-lightgreen);">Admin</a>` : ''}
+                <button id="logout-btn" class="get-started-button">Logout</button>
+            </div>
+        `;
+        
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await window.supabaseClient.auth.signOut();
+            location.reload();
+        });
+    }
+}
+
+updateHeaderAuth();
+
 const openModalBtn2 = document.getElementById('open-modal-btn2');
 const modal = document.getElementById('my-modal');
 const closeModalBtn = document.getElementById('close-modal-btn');
@@ -99,7 +131,15 @@ function closeModal() {
     document.body.style.overflow = '';
 }
 
+// Close modal when clicking outside of modal-content
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+
 feedbackForm.addEventListener('submit', (e) => {
+
     e.preventDefault();
 
     alert('Форму успішно відправлено!');

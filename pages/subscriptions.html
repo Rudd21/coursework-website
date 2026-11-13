@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Підписка на теги | Etran</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/images/small-logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .sub-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .tags-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        .sub-tag-item {
+            cursor: pointer;
+            padding: 10px 20px;
+            border: 2px solid var(--my-lightgreen);
+            border-radius: 30px;
+            transition: all 0.2s;
+        }
+        .sub-tag-item input {
+            display: none;
+        }
+        .sub-tag-item:has(input:checked) {
+            background: var(--my-darkgreen);
+            color: white;
+            border-color: var(--my-darkgreen);
+        }
+        @media (min-width: 1025px) {
+            header {
+                position: static;
+                width: 100%; 
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body style="background: var(--my-background-gray);">
+    <div class="container" style="flex-direction: column;">
+        <header style="background: var(--my-darkgreen); padding: 1.5rem 5%;">
+            <div class="logo" style="cursor: pointer;" onclick="window.location.href='../index.html'">
+                <img src="../assets/images/small-logo.svg" alt="">
+                <p>Etran</p>
+            </div>
+        </header>
+
+        <main class="sub-container">
+            <h2 style="color: var(--my-darkgreen);">Налаштування підписки</h2>
+            <p style="color: var(--my-gray); margin-top: 10px;">Оберіть теми, які вас цікавлять, і ми будемо повідомляти вас про нові статті.</p>
+            
+            <div id="full-tags-list" class="tags-grid">
+                <!-- Tags will be loaded here -->
+            </div>
+
+            <button id="save-subs-btn" class="submit-btn" style="width: auto; padding: 12px 40px;">Зберегти вибір</button>
+            <br><br>
+            <a href="blog.html" style="color: var(--my-gray); text-decoration: none; font-size: 0.9rem;">← Повернутися до блогу</a>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabaseClient.js"></script>
+    <script src="../assets/js/blog-data.js"></script>
+    <script>
+        // Specific logic for this page
+        async function loadSubscriptionPage() {
+            const { data: { session } } = await window.supabaseClient.auth.getSession();
+            if (!session) {
+                alert("Будь ласка, увійдіть в систему");
+                window.location.href = "../index.html";
+                return;
+            }
+
+            const posts = await fetchPosts();
+            const allTags = [...new Set(posts.flatMap(p => p.tags || []))];
+            
+            const { data: currentSub } = await window.supabaseClient
+                .from('subscriptions')
+                .select('tags')
+                .eq('user_id', session.user.id)
+                .maybeSingle();
+
+            const activeTags = currentSub ? currentSub.tags : [];
+            const container = document.getElementById('full-tags-list');
+            
+            container.innerHTML = allTags.map(tag => `
+                <label class="sub-tag-item">
+                    <input type="checkbox" value="${tag}" ${activeTags.includes(tag) ? 'checked' : ''}>
+                    ${tag}
+                </label>
+            `).join('');
+
+            document.getElementById('save-subs-btn').onclick = async () => {
+                const selected = Array.from(container.querySelectorAll('input:checked')).map(i => i.value);
+                const { error } = await window.supabaseClient
+                    .from('subscriptions')
+                    .upsert({ user_id: session.user.id, tags: selected }, { onConflict: 'user_id' });
+                
+                if (error) alert('Помилка: ' + error.message);
+                else alert('Налаштування оновлено!');
+            };
+        }
+        loadSubscriptionPage();
+    </script>
+</body>
+
+</html>

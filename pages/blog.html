@@ -27,11 +27,59 @@
             max-width: 1200px;
             margin: 4rem auto;
         }
-        .blog-date {
-            font-size: 0.8rem;
-            color: var(--my-green);
-            display: block;
-            margin-bottom: 0.5rem;
+        .blog-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background: var(--my-background-gray);
+            border-radius: 12px;
+            align-items: center;
+        }
+        .search-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .filter-select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+        .tags-container {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            padding: 4px 12px;
+            background: var(--my-lightgreen);
+            color: var(--my-darkgreen);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .tag.active {
+            background: var(--my-darkgreen);
+            color: white;
+        }
+        .tag:hover {
+            opacity: 0.8;
+        }
+        @media (min-width: 1025px) {
+            header {
+                position: static;
+                width: 100%;
+                height: 40vh;
+            }
         }
     </style>
 </head>
@@ -48,6 +96,21 @@
         </header>
 
         <main class="blog-list-container">
+            <div class="blog-controls">
+                <input type="text" id="blog-search" class="search-input" placeholder="Пошук за назвою або описом...">
+                
+                <select id="sort-date" class="filter-select">
+                    <option value="newest">Спочатку нові</option>
+                    <option value="oldest">Спочатку старі</option>
+                </select>
+
+                <a href="subscriptions.html" class="get-started-button" style="text-decoration: none; width: auto; font-size: 0.9rem; display: flex; align-items: center; justify-content: center;">Підписатися на теги</a>
+
+                <div id="blog-tags" class="tags-container">
+                    <!-- Tags will be injected here -->
+                </div>
+            </div>
+
             <div id="all-blog-posts" class="blog-posts-grid">
                 <!-- All posts injected here -->
             </div>
@@ -63,7 +126,9 @@
             </div>
         </footer>
     </div>
-
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabaseClient.js"></script>
     <script src="../assets/js/blog-data.js"></script>
 </body>
 

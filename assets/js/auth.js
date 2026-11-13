@@ -54,28 +54,45 @@ authForm.addEventListener('submit', async (e) => {
     const email = document.getElementById('authEmail').value;
     const password = document.getElementById('authPassword').value;
 
+    // Валідація
+    if (!validateEmail(email)) {
+        alert('Введіть коректну адресу електронної пошти.');
+        return;
+    }
+
+    if (password.length < 6) {
+        alert('Пароль повинен бути не менше 6 символів.');
+        return;
+    }
+
     try {
         if (isSignUp) {
-            const { data, error } = await window.supabaseClient.auth.signUp({
+            const { data, error } = await supabaseClient.auth.signUp({
                 email,
                 password,
             });
             if (error) throw error;
             alert('Реєстрація успішна! Перевірте пошту для підтвердження.');
         } else {
-            const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
                 email,
                 password,
             });
             if (error) throw error;
             alert('Вхід успішний!');
-            window.location.href = './pages/admin.html';
+            // Reload page to update UI instead of redirecting to admin
+            location.reload();
         }
         closeModal();
     } catch (error) {
         alert('Помилка: ' + error.message);
     }
 });
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
 
 function closeModal() {
     modal.classList.remove('modal-open');

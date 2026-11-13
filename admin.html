@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адмін Панель | Etran</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/images/small-logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        nav{
+            display: block;
+        }
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        .admin-sidebar {
+            width: 250px;
+            background: var(--my-darkgreen);
+            color: white;
+            padding: 2rem;
+        }
+        .admin-main {
+            flex-grow: 1;
+            background: #f4f4f4;
+            padding: 3rem;
+        }
+        .admin-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .login-placeholder {
+            max-width: 400px;
+            margin: 100px auto;
+            text-align: center;
+        }
+        .admin-nav-item{
+            padding: 10px;
+        }
+        .admin-nav-item:hover{
+            cursor: pointer;
+        }
+        .admin-nav-item.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--my-lightgreen);
+        }
+        .admin-view {
+            width: 100%;
+        }
+        .role-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .role-admin { background: #ffebee; color: #c62828; }
+        .role-staff { background: #e8f5e9; color: #2e7d32; }
+        .role-user { background: #e3f2fd; color: #1565c0; }
+        .admin-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        .admin-modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .form-row {
+            margin-bottom: 1rem;
+        }
+        .form-row label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .form-row input, .form-row textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .btn-cancel {
+            background: #eee;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .image-preview {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Placeholder for Supabase Auth in the future -->
+    <div id="admin-auth" class="login-placeholder admin-card">
+        <h2 style="color: var(--my-darkgreen);">Вхід в Адмін Панель</h2>
+        <p style="margin: 1rem 0; color: var(--my-gray);">Буде підключено до Supabase Auth</p>
+        <form id="admin-login-form">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="admin-email" placeholder="admin@etran.com" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="admin-password" placeholder="********" required>
+            </div>
+            <button type="submit" class="submit-btn">Увійти</button>
+        </form>
+    </div>
+
+    <div id="admin-dashboard" class="admin-layout" style="display: none;">
+        <aside class="admin-sidebar">
+            <div class="logo" style="margin-bottom: 3rem;">
+                <img src="../assets/images/small-logo.svg" alt="">
+                <p>Etran Admin</p>
+            </div>
+            <nav id="admin-nav">
+                <div class="admin-nav-item active" data-section="blog-section">Блог</div>
+                <div class="admin-nav-item" data-section="admin-section">Адміністрація</div>
+                <div class="admin-nav-item" data-section="users-section">Користувачі</div>
+                <div class="admin-nav-item" style="margin-top: 1.5rem;">
+                    <a href="/" style="color: #ff6b6b; text-decoration: none;">Вийти</a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <!-- Blog Section -->
+            <div id="blog-section" class="admin-view">
+                <div class="admin-header">
+                    <h1 style="color: var(--my-darkgreen); width: auto;">Керування Блогом</h1>
+                    <button id="add-post-btn" class="get-started-button" style="width: auto; padding: 0 20px;">+ Нова стаття</button>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Останні статті</h3>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                        <thead>
+                            <tr style="text-align: left; border-bottom: 2px solid var(--my-background-gray);">
+                                <th style="padding: 1rem 0;">Заголовок</th>
+                                <th>Дата</th>
+                                <th>Статус</th>
+                                <th>Дії</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-posts-list">
+                            <!-- Will be populated from JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Administration Section -->
+            <div id="admin-section" class="admin-view" style="display: none;">
+                <div class="admin-header">
+                    <h1 style="color: var(--my-darkgreen); width: auto;">Персонал</h1>
+                </div>
+                <div class="admin-card">
+                    <p style="margin-bottom: 1rem; color: var(--my-gray);">Тут відображаються Адміни та Модератори (Staff).</p>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="text-align: left; border-bottom: 2px solid var(--my-background-gray);">
+                                <th style="padding: 1rem 0;">Email</th>
+                                <th>Роль</th>
+                                <th>Дії</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-staff-list"></tbody>
+                    </table>
+                    <div id="add-staff-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; display: none;">
+                        <button id="show-add-staff-form" class="get-started-button" style="width: auto; padding: 5px 15px;">+ Додати персонал</button>
+                        <div id="add-staff-form-wrap" style="display: none; margin-top: 1rem; align-items: center; gap: 10px;">
+                            <select id="user-to-staff-select" class="form-row" style="margin-bottom: 0; width: 250px; padding: 8px; border-radius: 4px;"></select>
+                            <button id="confirm-add-staff" class="submit-btn" style="width: auto; padding: 8px 20px;">Призначити Staff</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="users-section" class="admin-view" style="display: none;">
+                <div class="admin-header">
+                    <h1 style="color: var(--my-darkgreen); width: auto;">Користувачі</h1>
+                </div>
+                <div class="admin-card">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="text-align: left; border-bottom: 2px solid var(--my-background-gray);">
+                                <th style="padding: 1rem 0;">Email</th>
+                                <th>ID</th>
+                                <th>Дата реєстрації</th>
+                                <th>Дії</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-users-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit/Create Modal -->
+    <div id="post-modal" class="admin-modal-overlay">
+        <div class="admin-modal-content">
+            <h3 id="modal-form-title">Створити статтю</h3>
+            <form id="post-form">
+                <input type="hidden" id="post-id">
+                <div class="form-row">
+                    <label>Заголовок</label>
+                    <input type="text" id="post-title" required>
+                </div>
+                <div class="form-row">
+                    <label>Короткий опис</label>
+                    <textarea id="post-excerpt" rows="2" required></textarea>
+                </div>
+                <div class="form-row">
+                    <label>Контент (HTML)</label>
+                    <textarea id="post-content" rows="6" required></textarea>
+                </div>
+                <div class="form-row">
+                    <label>Теги (через кому)</label>
+                    <input type="text" id="post-tags" placeholder="Tech, Banking, Future">
+                </div>
+                <div class="form-row">
+                    <label>Зображення</label>
+                    <input type="file" id="post-image-file" accept="image/*">
+                    <input type="hidden" id="post-image-url">
+                    <img id="post-image-preview" class="image-preview" src="" alt="Прев'ю">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="document.getElementById('post-modal').style.display='none'">Скасувати</button>
+                    <button type="submit" class="submit-btn" style="width: auto;">Зберегти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="admin-modal-overlay">
+        <div class="admin-modal-content" style="max-width: 400px; text-align: center;">
+            <h3>Видалити статтю?</h3>
+            <p>Цю дію неможливо буде скасувати.</p>
+            <div class="modal-actions" style="justify-content: center;">
+                <button class="btn-cancel" onclick="document.getElementById('delete-modal').style.display='none'">Ні, залишити</button>
+                <button id="confirm-delete-btn" class="submit-btn" style="width: auto; background: #ff6b6b;">Так, видалити</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabaseClient.js"></script>
+    <script src="../assets/js/admin.js"></script>
+</body>
+
+</html>

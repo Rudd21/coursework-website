@@ -82,6 +82,23 @@
             <div class="article-body" id="article-body">
                 <!-- Content injected here -->
             </div>
+
+            <hr style="margin: 3rem 0; border: 0; border-top: 1px solid #eee;">
+
+            <!-- Comments Section -->
+            <section class="comments-section">
+                <h3 style="color: var(--my-darkgreen); margin-bottom: 1.5rem;">Коментарі</h3>
+                <div id="auth-reminder" style="display: none; padding: 1rem; background: #fff3cd; border-radius: 8px; margin: 1rem 0; font-size: 0.9rem;">
+                    Будь ласка, <a href="../index.html" style="color: var(--my-darkgreen); font-weight: bold;">увійдіть</a>, щоб залишити коментар.
+                </div>
+                <form id="comment-form" style="margin-bottom: 2.5rem; display: none;">
+                    <textarea id="comment-text" style="width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid #ccc; font-family: inherit;" rows="3" placeholder="Напишіть вашу думку..." required></textarea>
+                    <button type="submit" class="submit-btn" style="width: auto; margin-top: 10px; padding: 10px 30px;">Відправити</button>
+                </form>
+                <div id="comments-list">
+                    <!-- Comments will be loaded here -->
+                </div>
+            </section>
         </main>
     </div>
 
@@ -92,6 +109,8 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabaseClient.js"></script>
     <script src="../assets/js/blog-data.js"></script>
 </body>
 
