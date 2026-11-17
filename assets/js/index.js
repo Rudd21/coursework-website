@@ -1,36 +1,36 @@
 const productionContent = [{
         path: './assets/images/2x.svg',
-        text: 'Double Your Productivity'
+        text: 'Подвійте свою продуктивність'
     },
     {
         path: './assets/images/diagram-prod.svg',
-        text: 'Efficiency Increase Per Transfer'
+        text: 'Вища ефективність кожного переказу'
     },
     {
         path: './assets/images/centra-prod.svg',
-        text: 'Centralize Your Finances'
+        text: 'Усі фінанси в одному місці'
     },
     {
         path: './assets/images/130-prod.svg',
-        text: 'More Activity'
+        text: 'Більше активності'
     }
 ]
 
 const softwareContent = [{
         path: './assets/images/pocket-software.png',
-        text: 'Safe Storage'
+        text: 'Надійне зберігання'
     },
     {
         path: './assets/images/finger-software.png',
-        text: 'Secure'
+        text: 'Захищеність'
     },
     {
         path: './assets/images/finance-software.png',
-        text: 'Earn Interest'
+        text: 'Пасивний дохід'
     },
     {
         path: './assets/images/family-software.png',
-        text: 'Family Plans'
+        text: 'Сімейні тарифи'
     }
 ]
 
@@ -92,8 +92,8 @@ async function updateHeaderAuth() {
 
         authButtons.innerHTML = `
             <div style="display: flex; align-items: center; gap: 15px;">
-                ${isAdmin ? `<a href="admin.html" class="login-button" style="text-decoration: none; display: block; text-align: center; border: 1px solid var(--my-lightgreen);">Admin</a>` : ''}
-                <button id="logout-btn" class="get-started-button">Logout</button>
+                ${isAdmin ? `<a href="admin.html" class="login-button" style="text-decoration: none; display: block; text-align: center; border: 1px solid var(--my-lightgreen);">Адмін</a>` : ''}
+                <button id="logout-btn" class="get-started-button">Вийти</button>
             </div>
         `;
         

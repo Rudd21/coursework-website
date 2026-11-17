@@ -32,7 +32,7 @@ async function initMainBlog() {
             <div class="blog-card-info">
                 <h3>${post.title}</h3>
                 <p>${post.excerpt}</p>
-                <a href="pages/article.html?id=${post.id}" class="read-more">Read More</a>
+                <a href="pages/article.html?id=${post.id}" class="read-more">Читати більше</a>
             </div>
         </div>
     `).join('');
@@ -93,7 +93,7 @@ function renderBlogList(posts) {
                 <span class="blog-date">${new Date(post.created_at).toLocaleDateString()}</span>
                 <h3>${post.title}</h3>
                 <p>${post.excerpt}</p>
-                <a href="article.html?id=${post.id}" class="read-more">Read More</a>
+                <a href="article.html?id=${post.id}" class="read-more">Читати більше</a>
             </div>
         </div>
     `).join('');

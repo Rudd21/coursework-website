@@ -95,7 +95,7 @@ h2 {
     border: 0;
     border-radius: 2px;
     font-size: 1rem;
-    width: 7.188rem;
+    min-width: 7.188rem;
     cursor: pointer;
 }
 
