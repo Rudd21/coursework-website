@@ -92,7 +92,7 @@ function showDashboard() {
     loadPosts();
 }
 
-// --- STAFF & USERS MANAGEMENT ---
+// 4. STAFF & USERS MANAGEMENT
 
 async function loadStaff() {
     const { data, error } = await window.supabaseClient
@@ -192,7 +192,7 @@ async function loadUsers() {
     }).join('');
 }
 
-// Додайте функцію toggleBan:
+// toggleBan
 async function toggleBan(userId, currentStatus) {
     const { error } = await window.supabaseClient
         .from('profiles')
@@ -203,7 +203,7 @@ async function toggleBan(userId, currentStatus) {
     else loadUsers();
 }
 
-// Зробіть її глобальною
+// toggleBan make globally 
 window.toggleBan = toggleBan;
 
 async function updateRole(userId, newRole) {
@@ -219,10 +219,10 @@ async function updateRole(userId, newRole) {
     }
 }
 
-// Make globally accessible for onclick
+// tupdateRole make globally
 window.updateRole = updateRole;
 
-// 4. Load Data
+// 5. Load Data
 async function loadPosts() {
     const { data, error } = await window.supabaseClient
         .from('posts')
@@ -258,7 +258,7 @@ async function loadPosts() {
     }
 }
 
-// CRUD Operations
+// 6. CRUD Operations
 document.getElementById('add-post-btn').addEventListener('click', () => {
     postForm.reset();
     document.getElementById('post-id').value = '';
@@ -302,7 +302,7 @@ confirmDeleteBtn.addEventListener('click', async () => {
     }
 });
 
-// Image Upload Logic
+// 7. Image Upload Logic
 document.getElementById('post-image-file').addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -363,7 +363,7 @@ postForm.addEventListener('submit', async (e) => {
     }
 });
 
-// --- EMAIL NOTIFICATIONS (Edge Function) ---
+// 8. EMAIL NOTIFICATIONS (Edge Function)
 
 async function notifySubscribers(post) {
     console.log('Викликаємо Edge Function для розсилки...');

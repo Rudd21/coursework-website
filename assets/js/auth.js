@@ -80,7 +80,6 @@ authForm.addEventListener('submit', async (e) => {
             });
             if (error) throw error;
             alert('Вхід успішний!');
-            // Reload page to update UI instead of redirecting to admin
             location.reload();
         }
         closeModal();
