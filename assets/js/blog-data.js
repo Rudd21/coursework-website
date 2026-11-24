@@ -111,7 +111,7 @@ function renderTags(posts) {
     const allTags = ['All', ...new Set(posts.flatMap(post => post.tags || []))];
     
     tagsContainer.innerHTML = allTags.map(tag => `
-        <span class="tag ${tag === activeTag ? 'active' : ''}" data-tag="${tag}">${tag}</span>
+        <span class="tag ${tag === activeTag ? 'active' : ''}" data-tag="${tag}">${tag === 'All' ? 'Всі' : tag}</span>
     `).join('');
 
     tagsContainer.querySelectorAll('.tag').forEach(tagEl => {
