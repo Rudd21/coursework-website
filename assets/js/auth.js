@@ -34,13 +34,13 @@ function openAuthModal(signup) {
 
 function updateAuthUI() {
     if (isSignUp) {
-        modalTitle.innerText = 'Create Account';
-        authSubmitBtn.innerText = 'Sign Up';
-        authSwitch.innerHTML = 'Already have an account? <span>Login</span>';
+        modalTitle.innerText = 'Створити акаунт';
+        authSubmitBtn.innerText = 'Зареєструватися';
+        authSwitch.innerHTML = 'Вже маєте акаунт? <span>Увійти</span>';
     } else {
-        modalTitle.innerText = 'Login to Etran';
-        authSubmitBtn.innerText = 'Login';
-        authSwitch.innerHTML = "Don't have an account? <span>Sign Up</span>";
+        modalTitle.innerText = 'Вхід в Etran';
+        authSubmitBtn.innerText = 'Увійти';
+        authSwitch.innerHTML = "Немає облікового запису? <span>Зареєструватися</span>";
     }
 }
 
