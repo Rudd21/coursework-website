@@ -483,7 +483,7 @@ footer {
 
 .modal-overlay.modal-open {
     opacity: 1;
-    pointer-events: auto;
+    pointer-events: all;
 }
 
 .modal-content {
